@@ -1,0 +1,57 @@
+letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+points = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10]
+
+
+# Create the letter_to_points dictionary using a comprehension and zip
+letter_to_points = {letter: point for letter, point in zip(letters, points)}
+
+# Add the value for a blank tile
+letter_to_points[" "] = 0
+
+# --- Score a Word Function ---
+
+def score_word(word):
+  """Calculates the point value of a given word."""
+  point_total = 0
+  for letter in word:
+    # Use .get() to find the point value, defaulting to 0 if not found
+    point_total += letter_to_points.get(letter, 0)
+  return point_total
+
+# --- Test the Function ---
+
+# Calculate the points for "BROWNIE"
+brownie_points = score_word("BROWNIE")
+
+# Print the result to verify
+print(f"The score for BROWNIE is: {brownie_points}")
+# Expected output: The score for BROWNIE is: 15
+
+print("-" * 20) # Separator
+
+# --- Score a Game ---
+
+# Dictionary of players and the words they've played
+player_to_words = {
+  "player1": ["BLUE", "TENNIS", "EXIT"],
+  "wordNerd": ["EARTH", "EYES", "MACHINE"],
+  "Lexi Con": ["ERASER", "BELLY", "HUSKY"],
+  "Prof Reader": ["ZAP", "COMA", "PERIOD"]
+}
+
+# Create an empty dictionary to store player scores
+player_to_points = {}
+
+# Iterate through each player and their words to calculate total points
+for player, words in player_to_words.items():
+  player_points = 0
+  # Tally the points for each word played by the current player
+  for word in words:
+    player_points += score_word(word)
+  # Add the final score to the player_to_points dictionary
+  player_to_points[player] = player_points
+
+# Print the final standings
+print("Current Game Standings:")
+print(player_to_points)
+# Expected output: {'player1': 29, 'wordNerd': 32, 'Lexi Con': 31, 'Prof Reader': 31}
